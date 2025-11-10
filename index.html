@@ -24,10 +24,6 @@ body.unlock-ready{background: radial-gradient(800px 500px at 10% 10%, rgba(155,8
 .calTop{display:flex;justify-content:space-between;align-items:center}
 .month{font-weight:700;color:var(--pale)}
 .year{opacity:0.9}
-.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:10px}
-.day{background:rgba(255,255,255,0.02);padding:12px;border-radius:8px;text-align:center;cursor:default}
-.day.clickable{cursor:pointer;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#1b0022;font-weight:700;box-shadow:0 6px 20px rgba(155,89,182,0.22)}
-.day.other{opacity:0.45}
 .calHint{margin-top:10px;font-size:13px;opacity:0.9}
 
 /* MAIN APP */
@@ -41,9 +37,6 @@ main{padding:18px}
 .thumbGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .thumb{height:92px;border-radius:10px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,0.03)}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.label{position:absolute;left:8px;top:8px;background:linear-gradient(90deg,var(--accent),var(--accent2));padding:4px 7px;border-radius:8px;font-size:12px;color:#1b0022}
-.replace{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,0.45);padding:6px;border-radius:8px;font-size:12px;cursor:pointer}
-.star{position:absolute;right:8px;top:8px;padding:6px;border-radius:8px;background:rgba(255,255,255,0.04);cursor:pointer}
 
 .shortList{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .msgBox{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;cursor:pointer;transition:all .22s}
@@ -114,17 +107,17 @@ footer{padding:10px;text-align:center;font-size:13px;opacity:0.9}
   <main>
     <div class="layout">
       <section class="card gallery">
-        <h3>Photos — (19)</h3>
+        <h3>19 Photos for mylove💜</h3>
         <div class="thumbGrid" id="thumbGrid"></div>
-        <div style="margin-top:10px;font-size:13px;opacity:0.9">Click replace to upload. Click star to select main photo for stage.</div>
       </section>
 
       <aside class="card">
         <h3 style="color:var(--accent);margin:0">Short Sweet Notes</h3>
         <div class="shortList" id="shortList"></div>
         <div class="longMsg">
-          <h4 style="margin:0;color:var(--accent)">Long Message (editable)</h4>
-          <div id="longMessage" class="editable" contenteditable="true">Hey love — today I want to tell you how much you mean to me. You are my smile, my calm, my crazy, and my best friend. Happy 19th! (Click to edit)</div>
+        <div id="longMessage" class="editable" contenteditable="true">
+Mommy happy 19th birthday iloveyousomuch 💜 I can’t believe you’re 19 na feels like yesterday we were laughing at silly things and sharing small moments together ❤️ you make every day brighter and safer ✨ I love our college life walking between classes and walking late nights studying laughing at our mistakes every little thing with you makes me so happy 💜 I love how our relationship is healthy we talk we listen we forgive we care we support each other even when things get hard we hold on and never give up ❤️ I dream about our future us traveling seeing new places laughing until our tummies hurt building memories always reminding each other how lucky we are to have each other ✨ I want to grow old with you and always say iloveyousomuch Mommy 💜 you are my joy my comfort my best friend my safe place my forever ❤️ I hope your birthday today is full of smiles hugs love just like you make me feel every day ✨ happy happy 19th birthday Mommy 💜
+</div>
         </div>
       </aside>
     </div>
@@ -138,33 +131,61 @@ footer{padding:10px;text-align:center;font-size:13px;opacity:0.9}
             <div class="glowLine" id="glowLine"></div>
           </div>
         </div>
-        <div id="finalText" class="small">Press the button to start the surprise.</div>
+        <div id="finalText" class="small">ILOVEYOUSOMUCH MOMMY.</div>
       </div>
 
       <div class="card">
-        <h4 style="margin:0;color:var(--accent)">Controls</h4>
+        <h4 style="margin:0;color:var(--accent)">Click this mommy</h4>
         <div class="controls">
-          <button id="surpriseBtn" class="btn">🎂 Happy Birthday my love — Click me</button>
-          <div class="small">Admin-only: Replace surprise photo inside JS using your password</div>
+          <button id="surpriseBtn" class="btn">🎂 Happy Birthday mylove💜 — Click me</button>
+          <div class="small">iloveyousomuch Mommy mwamwamwamwa</div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>Made with ❤ — open in a modern browser. Music plays after unlocking.</footer>
+  <footer>Made with one and only your daddy ❤.</footer>
 </div>
 
 <input id="fileInput" type="file" accept="image/*" style="display:none" />
-<!-- Audio for Happy Birthday piano -->
-<audio id="birthdayAudio" src="happy_birthday_piano.mp3" preload="auto"></audio>
+<audio id="birthdayAudio" preload="auto" loop></audio>
 
 <script>
 // ====== CONFIG ======
 const BIRTHDAY = {year:2006, month:11, day:11};
-const TOTAL=19;
-let images = new Array(TOTAL).fill('');
+const SURPRISE_IMAGE = "surprise.jpg";
+
+const numberImagesData = [
+  {name: "Number 1", category: "Birthday", img: "number1.jpg"},
+  {name: "Number 2", category: "Birthday", img: "number2.jpg"},
+  {name: "Number 3", category: "Birthday", img: "number3.jpg"},
+  {name: "Number 4", category: "Birthday", img: "number4.jpg"},
+  {name: "Number 5", category: "Birthday", img: "number5.jpg"},
+  {name: "Number 6", category: "Birthday", img: "number6.jpg"},
+  {name: "Number 7", category: "Birthday", img: "number7.jpg"},
+  {name: "Number 8", category: "Birthday", img: "number8.jpg"},
+  {name: "Number 9", category: "Birthday", img: "number9.jpg"},
+  {name: "Number 10", category: "Birthday", img: "number10.jpg"},
+  {name: "Number 11", category: "Birthday", img: "number11.jpg"},
+  {name: "Number 12", category: "Birthday", img: "number12.jpg"},
+  {name: "Number 13", category: "Birthday", img: "number13.jpg"},
+  {name: "Number 14", category: "Birthday", img: "number14.jpg"},
+  {name: "Number 15", category: "Birthday", img: "number15.jpg"},
+  {name: "Number 16", category: "Birthday", img: "number16.jpg"},
+  {name: "Number 17", category: "Birthday", img: "number17.jpg"},
+  {name: "Number 18", category: "Birthday", img: "number18.jpg"},
+  {name: "Number 19", category: "Birthday", img: "number19.jpg"}
+];
+
+const thumbGrid = document.getElementById('thumbGrid');
+let images = new Array(numberImagesData.length).fill('');
 let selectedIndex = 0;
-let heartInterval=null;
+let heartInterval = null;
+const audio = document.getElementById('birthdayAudio');
+
+// Base64 Happy Birthday piano audio
+audio.src = "data:audio/mpeg;base64,//uQxAA..."; // <-- Replace ... with full Base64 audio
+audio.loop = true;
 
 // ====== CALENDAR / PASSWORD ======
 const yearSelect = document.getElementById('yearSelect');
@@ -178,61 +199,60 @@ function updateDays(){
   daySelect.innerHTML='';
   for(let d=1;d<=daysInMonth;d++){ let o=document.createElement('option'); o.value=d; o.textContent=d; daySelect.appendChild(o);}
 }
-for(let d=1;d<=31;d++){ let o=document.createElement('option'); o.value=d; o.textContent=d; daySelect.appendChild(o);}
 yearSelect.addEventListener('change',updateDays);
 monthSelect.addEventListener('change',updateDays);
 updateDays();
 
 document.getElementById('pwTry').addEventListener('click',()=>{
   const y=yearSelect.value, m=monthSelect.value.padStart(2,'0'), d=daySelect.value.padStart(2,'0');
-  if(parseInt(y)===BIRTHDAY.year && parseInt(m)===BIRTHDAY.month && parseInt(d)===BIRTHDAY.day) unlock();
-  else alert('Incorrect date. Try again 💜');
+  if(parseInt(y)===BIRTHDAY.year && parseInt(m)===BIRTHDAY.month && parseInt(d)===BIRTHDAY.day){
+    unlock();
+    audio.play().catch(e=>console.warn('Audio play failed',e));
+  } else alert('Incorrect date. Try again 💜');
 });
 
 // ====== UNLOCK ======
 const lockDiv=document.getElementById('lock'); const app=document.getElementById('app');
 function unlock(){
   document.body.classList.add('unlock-ready');
-  lockDiv.style.transition='opacity .6s'; lockDiv.style.opacity=0; setTimeout(()=>lockDiv.style.display='none',600);
+  lockDiv.style.transition='opacity .6s'; lockDiv.style.opacity=0;
+  setTimeout(()=>lockDiv.style.display='none',600);
   app.classList.add('visible');
-  startMusic();
 }
 
-// ====== MUSIC ======
-function startMusic(){
-  const audio = document.getElementById('birthdayAudio');
-  audio.play().catch(e => console.warn('Audio play failed:', e));
-}
-
-// ====== THUMBNAILS ======
-const thumbGrid=document.getElementById('thumbGrid');
-for(let i=0;i<TOTAL;i++){
-  const div=document.createElement('div'); div.className='thumb'; div.dataset.index=i;
-  const img=document.createElement('img'); img.alt='Photo '+(i+1);
-  const svg=`<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%239b59b6'/><stop offset='1' stop-color='%23d7b3ff'/></linearGradient></defs><rect width='100%' height='100%' fill='url(%23g)' rx='12'/><text x='50%' y='50%' font-family='Arial' font-size='36' fill='white' text-anchor='middle' dominant-baseline='middle'>Photo ${i+1}</text></svg>`;
-  img.src='data:image/svg+xml;utf8,'+encodeURIComponent(svg);
+// ====== GALLERY ======
+numberImagesData.forEach((item,index)=>{
+  const div = document.createElement('div'); 
+  div.className='thumb'; 
+  div.dataset.index=index;
+  const img = document.createElement('img'); 
+  img.alt=item.name; 
+  img.src=item.img; 
   div.appendChild(img);
-  const label=document.createElement('div'); label.className='label'; label.textContent=(i+1); div.appendChild(label);
-  const star=document.createElement('div'); star.className='star'; star.innerHTML='★'; star.title='Mark as main photo'; star.addEventListener('click',(e)=>{e.stopPropagation(); setMain(i);} ); div.appendChild(star);
-  const rep=document.createElement('div'); rep.className='replace'; rep.textContent='Replace'; rep.addEventListener('click',(e)=>{ e.stopPropagation(); chooseFile(i); }); div.appendChild(rep);
-  div.addEventListener('click', ()=>{ openPreview(i); });
+  div.addEventListener('click',()=>openPreview(index));
   thumbGrid.appendChild(div);
-}
-function chooseFile(index){
-  const fileInput=document.getElementById('fileInput');
-  fileInput.onchange=(ev)=>{ const f=ev.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ images[index]=r.result; thumbGrid.querySelector(`[data-index='${index}'] img`).src=images[index]; if(index===selectedIndex) updateMainPhoto(); }; r.readAsDataURL(f); fileInput.value=''; };
-  fileInput.click();
-}
-function setMain(i){ selectedIndex=i; thumbGrid.querySelectorAll('.thumb').forEach(t=>t.style.boxShadow=''); const sel=thumbGrid.querySelector(`[data-index='${i}']`); if(sel) sel.style.boxShadow='0 8px 30px rgba(155,89,182,0.18)'; updateMainPhoto(); }
-function updateMainPhoto(){ const mp=document.getElementById('mainPhoto'); if(images[selectedIndex]){ mp.src=images[selectedIndex]; mp.style.display='block'; mp.classList.add('decor'); } else { mp.style.display='none'; } }
-function openPreview(i){ const url = images[i]||thumbGrid.querySelector(`[data-index='${i}'] img`).src; const w=window.open('','_blank'); w.document.write(`<img src="${url}" style="max-width:100%;display:block;margin:20px auto;">`); }
+});
 setMain(0);
 
+function setMain(i){ selectedIndex=i; updateMainPhoto(); }
+function updateMainPhoto(){ const mp=document.getElementById('mainPhoto'); if(images[selectedIndex]){ mp.src=images[selectedIndex]; mp.style.display='block'; mp.classList.add('decor'); } else { mp.style.display='none'; } }
+function openPreview(i){ const url = images[i]||thumbGrid.querySelector(`[data-index='${i}'] img`).src; const w=window.open('','_blank'); w.document.write(`<img src="${url}" style="max-width:100%;display:block;margin:20px auto;">`); }
+
 // ====== SHORT MESSAGES ======
-const SHORT_MESSAGES=['You make my heart skip a beat.','Your laugh = my favorite song.','You are my safe place.','19 looks so beautiful on you.','I love your smile more every day.','Thank you for being you.','Forever starts with you.','You + me = ❤️','My favorite person, always.'];
+const SHORT_MESSAGES = [
+  'You make every day better 😊',
+  'I love spending time with you 💛',
+  'You always make me smile 😄',
+  'Being with you feels right 💜',
+  'You’re my favorite person 🌟',
+  'I’m happy whenever you’re around 😌',
+  'You make life more fun 🎉',
+  'Can’t stop thinking about you 💖',
+  'You mean a lot to me 🥰'
+];
 const shortList=document.getElementById('shortList'); SHORT_MESSAGES.forEach(t=>{ const box=document.createElement('div'); box.className='msgBox'; box.innerHTML=`<p>${t}</p>`; box.addEventListener('click',()=>box.classList.toggle('big')); shortList.appendChild(box); });
 
-// ====== SURPRISE: heart shape ======
+// ====== SURPRISE ======
 const surpriseBtn=document.getElementById('surpriseBtn'); 
 const glowLine=document.getElementById('glowLine'); 
 const lineArea=document.getElementById('lineArea');
@@ -240,16 +260,21 @@ const lineArea=document.getElementById('lineArea');
 surpriseBtn.addEventListener('click', ()=>{
   glowLine.classList.add('show');
   spawnHearts();
+
+  const mp = document.getElementById('mainPhoto');
+  mp.src = SURPRISE_IMAGE;
+  mp.style.display='block';
+  mp.classList.add('decor');
+
+  if(audio.paused) audio.play().catch(e=>console.warn('Audio play failed',e));
 });
 
 function spawnHearts(){
   if(heartInterval) return;
-  const lineWidth = lineArea.offsetWidth;
-  let t = 0;
-  heartInterval = setInterval(()=>{
+  let t=0;
+  heartInterval=setInterval(()=>{
     const h=document.createElement('div'); 
     h.className='heart';
-    const scale = 8;
     const x = 16 * Math.pow(Math.sin(t),3);
     const y = 13 * Math.cos(t) - 5*Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t);
     h.style.left = ((x+20)/40*100)+'%';
@@ -265,7 +290,10 @@ function spawnHearts(){
 }
 
 // ====== Header edit
-document.getElementById('headerTitle').addEventListener('click', ()=>{ const t=prompt('Edit header greeting:', document.getElementById('headerTitle').innerText); if(t!==null) document.getElementById('headerTitle').innerText=t; });
+document.getElementById('headerTitle').addEventListener('click', ()=>{
+  const t=prompt('Edit header greeting:', document.getElementById('headerTitle').innerText);
+  if(t!==null) document.getElementById('headerTitle').innerText=t;
+});
 </script>
 </body>
 </html>
