@@ -153,39 +153,34 @@ Mommy happy 19th birthday iloveyousomuch 💜 I can’t believe you’re 19 na f
 <script>
 // ====== CONFIG ======
 const BIRTHDAY = {year:2006, month:11, day:11};
-const SURPRISE_IMAGE = "surprise.jpg";
 
+// ====== GALLERY IMAGES (GitHub URLs) ======
 const numberImagesData = [
-  {name: "Number 1", category: "Birthday", img: "number1.jpg"},
-  {name: "Number 2", category: "Birthday", img: "number2.jpg"},
-  {name: "Number 3", category: "Birthday", img: "number3.jpg"},
-  {name: "Number 4", category: "Birthday", img: "number4.jpg"},
-  {name: "Number 5", category: "Birthday", img: "number5.jpg"},
-  {name: "Number 6", category: "Birthday", img: "number6.jpg"},
-  {name: "Number 7", category: "Birthday", img: "number7.jpg"},
-  {name: "Number 8", category: "Birthday", img: "number8.jpg"},
-  {name: "Number 9", category: "Birthday", img: "number9.jpg"},
-  {name: "Number 10", category: "Birthday", img: "number10.jpg"},
-  {name: "Number 11", category: "Birthday", img: "number11.jpg"},
-  {name: "Number 12", category: "Birthday", img: "number12.jpg"},
-  {name: "Number 13", category: "Birthday", img: "number13.jpg"},
-  {name: "Number 14", category: "Birthday", img: "number14.jpg"},
-  {name: "Number 15", category: "Birthday", img: "number15.jpg"},
-  {name: "Number 16", category: "Birthday", img: "number16.jpg"},
-  {name: "Number 17", category: "Birthday", img: "number17.jpg"},
-  {name: "Number 18", category: "Birthday", img: "number18.jpg"},
-  {name: "Number 19", category: "Birthday", img: "number19.jpg"}
+  {name: "Number 1", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number1.jpg"},
+  {name: "Number 2", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number2.jpg"},
+  {name: "Number 3", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number3.jpg"},
+  {name: "Number 4", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number4.jpg"},
+  {name: "Number 5", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number5.jpg"},
+  {name: "Number 6", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number6.jpg"},
+  {name: "Number 7", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number7.jpg"},
+  {name: "Number 8", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number8.jpg"},
+  {name: "Number 9", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number9.jpg"},
+  {name: "Number 10", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number10.jpg"},
+  {name: "Number 11", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number11.jpg"},
+  {name: "Number 12", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number12.jpg"},
+  {name: "Number 13", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number13.jpg"},
+  {name: "Number 14", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number14.jpg"},
+  {name: "Number 15", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number15.jpg"},
+  {name: "Number 16", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number16.jpg"},
+  {name: "Number 17", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number17.jpg"},
+  {name: "Number 18", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number18.jpg"},
+  {name: "Number 19", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number19.jpg"}
 ];
 
 const thumbGrid = document.getElementById('thumbGrid');
-let images = new Array(numberImagesData.length).fill('');
 let selectedIndex = 0;
 let heartInterval = null;
 const audio = document.getElementById('birthdayAudio');
-
-// Base64 Happy Birthday piano audio
-audio.src = "data:audio/mpeg;base64,//uQxAA..."; // <-- Replace ... with full Base64 audio
-audio.loop = true;
 
 // ====== CALENDAR / PASSWORD ======
 const yearSelect = document.getElementById('yearSelect');
@@ -212,7 +207,8 @@ document.getElementById('pwTry').addEventListener('click',()=>{
 });
 
 // ====== UNLOCK ======
-const lockDiv=document.getElementById('lock'); const app=document.getElementById('app');
+const lockDiv=document.getElementById('lock'); 
+const app=document.getElementById('app');
 function unlock(){
   document.body.classList.add('unlock-ready');
   lockDiv.style.transition='opacity .6s'; lockDiv.style.opacity=0;
@@ -234,9 +230,21 @@ numberImagesData.forEach((item,index)=>{
 });
 setMain(0);
 
-function setMain(i){ selectedIndex=i; updateMainPhoto(); }
-function updateMainPhoto(){ const mp=document.getElementById('mainPhoto'); if(images[selectedIndex]){ mp.src=images[selectedIndex]; mp.style.display='block'; mp.classList.add('decor'); } else { mp.style.display='none'; } }
-function openPreview(i){ const url = images[i]||thumbGrid.querySelector(`[data-index='${i}'] img`).src; const w=window.open('','_blank'); w.document.write(`<img src="${url}" style="max-width:100%;display:block;margin:20px auto;">`); }
+function setMain(i){ 
+  selectedIndex=i; 
+  updateMainPhoto(); 
+}
+function updateMainPhoto(){ 
+  const mp=document.getElementById('mainPhoto'); 
+  mp.src = numberImagesData[selectedIndex].img; 
+  mp.style.display='block'; 
+  mp.classList.add('decor'); 
+}
+function openPreview(i){ 
+  const url = numberImagesData[i].img; 
+  const w=window.open('','_blank'); 
+  w.document.write(`<img src="${url}" style="max-width:100%;display:block;margin:20px auto;">`); 
+}
 
 // ====== SHORT MESSAGES ======
 const SHORT_MESSAGES = [
@@ -250,23 +258,40 @@ const SHORT_MESSAGES = [
   'Can’t stop thinking about you 💖',
   'You mean a lot to me 🥰'
 ];
-const shortList=document.getElementById('shortList'); SHORT_MESSAGES.forEach(t=>{ const box=document.createElement('div'); box.className='msgBox'; box.innerHTML=`<p>${t}</p>`; box.addEventListener('click',()=>box.classList.toggle('big')); shortList.appendChild(box); });
+const shortList=document.getElementById('shortList'); 
+SHORT_MESSAGES.forEach(t=>{
+  const box=document.createElement('div'); 
+  box.className='msgBox'; 
+  box.innerHTML=`<p>${t}</p>`; 
+  box.addEventListener('click',()=>box.classList.toggle('big')); 
+  shortList.appendChild(box); 
+});
 
-// ====== SURPRISE ======
+// ====== SURPRISE BUTTON (Cycle through all 19 images) ======
 const surpriseBtn=document.getElementById('surpriseBtn'); 
 const glowLine=document.getElementById('glowLine'); 
 const lineArea=document.getElementById('lineArea');
 
-surpriseBtn.addEventListener('click', ()=>{
+surpriseBtn.addEventListener('click', () => {
   glowLine.classList.add('show');
   spawnHearts();
 
   const mp = document.getElementById('mainPhoto');
-  mp.src = SURPRISE_IMAGE;
-  mp.style.display='block';
+  mp.style.display = 'block';
   mp.classList.add('decor');
 
-  if(audio.paused) audio.play().catch(e=>console.warn('Audio play failed',e));
+  if(audio.paused) audio.play().catch(e=>console.warn('Audio play failed', e));
+
+  // Cycle through all 19 images
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i >= numberImagesData.length) {
+      clearInterval(interval);
+      return;
+    }
+    mp.src = numberImagesData[i].img;
+    i++;
+  }, 800); // adjust speed here
 });
 
 function spawnHearts(){
@@ -289,7 +314,7 @@ function spawnHearts(){
   },200);
 }
 
-// ====== Header edit
+// ====== Header edit ======
 document.getElementById('headerTitle').addEventListener('click', ()=>{
   const t=prompt('Edit header greeting:', document.getElementById('headerTitle').innerText);
   if(t!==null) document.getElementById('headerTitle').innerText=t;
