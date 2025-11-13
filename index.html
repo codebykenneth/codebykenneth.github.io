@@ -3,322 +3,195 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Happy 19th — Surprise for Her</title>
+<title>Interactive Mood Advice</title>
 <style>
-:root{
-  --bg1:#0b0710; --bg2:#12071a; --accent:#9b59b6; --accent2:#c77dff; --pale:#d9b3ff; --card:#161018;
-}
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:#fff;background:#0b0710;}
-body.unlock-ready{background: radial-gradient(800px 500px at 10% 10%, rgba(155,89,182,0.12), transparent), linear-gradient(180deg,var(--bg1),var(--bg2));}
-.app{opacity:0;pointer-events:none;transition:opacity .6s ease,filter .6s ease}
-.app.visible{opacity:1;pointer-events:auto}
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-/* LOCK / CALENDAR */
-#lock{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(0,0,0,0.85),rgba(0,0,0,0.95));}
-.calCard{width:520px;max-width:94%;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:16px;padding:22px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 20px 60px rgba(0,0,0,0.6)}
-.calHeader{display:flex;align-items:center;gap:14px}
-.calTitle{font-size:20px;color:var(--accent);margin:0}
-.calSub{opacity:0.9;font-size:13px}
-.calendar{margin-top:14px;background:linear-gradient(180deg,rgba(155,89,182,0.04),transparent);padding:12px;border-radius:12px}
-.calTop{display:flex;justify-content:space-between;align-items:center}
-.month{font-weight:700;color:var(--pale)}
-.year{opacity:0.9}
-.calHint{margin-top:10px;font-size:13px;opacity:0.9}
+  body {
+    font-family: "Poppins", sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
+    background-size: 400% 400%;
+    animation: gradientShift 10s ease infinite;
+  }
 
-/* MAIN APP */
-header{padding:22px;display:flex;gap:18px;align-items:center}
-.greeting h1{margin:0;font-size:26px;color:var(--pale)}
-main{padding:18px}
-.layout{display:grid;grid-template-columns:1fr 420px;gap:18px}
+  @keyframes gradientShift {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
 
-.card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
-.gallery h3{margin:0 0 10px 0;color:var(--accent)}
-.thumbGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.thumb{height:92px;border-radius:10px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,0.03)}
-.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .container {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    padding: 40px 30px;
+    border-radius: 25px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    width: 340px;
+    text-align: center;
+    color: #fff;
+    animation: fadeIn 1s ease;
+  }
 
-.shortList{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.msgBox{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;cursor:pointer;transition:all .22s}
-.msgBox.big{transform:scale(1.03);box-shadow:0 12px 30px rgba(0,0,0,0.6)}
+  h2 {
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #fff;
+  }
 
-.longMsg{margin-top:12px;background:linear-gradient(90deg, rgba(155,89,182,0.06), rgba(215,179,255,0.03));padding:12px;border-radius:10px;border:1px solid rgba(155,89,182,0.12)}
-.editable{min-height:100px;outline:none}
+  p {
+    margin: 10px 0 20px;
+    min-height: 50px;
+  }
 
-/* FINAL STAGE */
-.stageWrap{display:flex;flex-direction:column;align-items:center;gap:12px}
-.stage{width:100%;height:260px;border-radius:12px;background:linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.28));display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.mainPic{width:180px;height:180px;border-radius:14px;object-fit:cover;box-shadow:0 12px 30px rgba(0,0,0,0.6);border:6px solid rgba(255,255,255,0.04);transition:transform .3s}
-.mainPic.decor{border-image:linear-gradient(90deg,var(--accent),var(--accent2)) 1;}
+  input {
+    padding: 10px;
+    width: 80%;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    font-size: 16px;
+    text-align: center;
+  }
 
-/* purple line and hearts */
-.lineArea{position:relative;width:100%;height:80px;margin-top:8px;overflow:visible}
-.glowLine{position:absolute;left:0;right:0;bottom:20px;height:6px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 6px 30px rgba(155,89,182,0.35);opacity:0;transform:scaleX(0);transform-origin:left center;transition:opacity .4s,transform .6s}
-.glowLine.show{opacity:1;transform:scaleX(1)}
-.heart{position:absolute;font-size:20px;opacity:0;text-shadow:0 0 10px #c77dff,0 0 20px #9b59b6; animation:rise 3s linear infinite}
-@keyframes rise{0%{transform:translateY(0) scale(0.8);opacity:1}80%{opacity:1}100%{transform:translateY(-260px) scale(1.2);opacity:0}}
+  button {
+    background: linear-gradient(90deg, #a18cd1, #fbc2eb);
+    border: none;
+    padding: 10px 25px;
+    border-radius: 20px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 8px;
+    transition: 0.3s ease;
+    box-shadow: 0 0 10px rgba(255,255,255,0.2);
+  }
 
-.controls{display:flex;flex-direction:column;gap:10px}
-.btn{cursor:pointer;padding:12px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#1b0022;font-weight:700}
-.small{font-size:13px;opacity:0.9}
+  button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px rgba(255,255,255,0.4);
+  }
 
-footer{padding:10px;text-align:center;font-size:13px;opacity:0.9}
-@media(max-width:900px){.layout{grid-template-columns:1fr}.thumbGrid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:520px){.thumbGrid{grid-template-columns:repeat(2,1fr)}.stage{height:200px}}
+  .fade {
+    animation: fadeIn 1s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .typewriter {
+    overflow: hidden;
+    border-right: .15em solid #fff;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .05em;
+    animation: typing 2.5s steps(25, end), blink-caret .75s step-end infinite;
+  }
+
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: white; }
+  }
 </style>
 </head>
 <body>
-
-<!-- LOCK / CALENDAR SCREEN -->
-<div id="lock">
-  <div class="calCard">
-    <div class="calHeader">
-      <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div>
-      <div>
-        <h3 class="calTitle">Open the Surprise</h3>
-        <div class="calSub">Select your special date to unlock.</div>
-      </div>
-    </div>
-
-    <div class="calendar" role="application">
-      <div class="calTop">
-        <div class="month">Birthday Password</div>
-      </div>
-      <div style="display:flex;gap:6px;margin-top:6px;">
-        <select id="yearSelect"></select>
-        <select id="monthSelect"></select>
-        <select id="daySelect"></select>
-        <button id="pwTry" class="btn" style="padding:10px">Unlock</button>
-      </div>
-      <div class="calHint">Your special day 💜</div>
-    </div>
+  <div class="container" id="app">
+    <h2 class="typewriter">Hello there!</h2>
+    <p>What’s your name?</p>
+    <input type="text" id="username" placeholder="Enter your name">
+    <br>
+    <button onclick="getName()">Continue</button>
   </div>
-</div>
 
-<!-- MAIN APP -->
-<div class="app" id="app">
-  <header>
-    <div class="greeting">
-      <h1 id="headerTitle">🎉 Happy 19th Birthday, my love!</h1>
-      <div class="small">Made with all my heart 💜</div>
-    </div>
-  </header>
+  <script>
+    const app = document.getElementById('app');
 
-  <main>
-    <div class="layout">
-      <section class="card gallery">
-        <h3>19 Photos for mylove💜</h3>
-        <div class="thumbGrid" id="thumbGrid"></div>
-      </section>
+    const moodAdvice = {
+      happy: [
+        "Keep spreading your positivity! Smile more today.",
+        "Your happiness is contagious. Share it with someone!",
+        "Enjoy the small wins—they matter more than you think."
+      ],
+      sad: [
+        "It's okay to feel sad. Allow yourself to rest and heal.",
+        "Talk to someone you trust. Sharing helps lighten the load.",
+        "Remember, storms never last forever. Better days are coming."
+      ],
+      stressed: [
+        "Take a deep breath. One step at a time is enough.",
+        "Short breaks help your mind reset. Try a 5-minute walk.",
+        "Focus on what you can control and let go of the rest."
+      ],
+      motivated: [
+        "Keep that energy! Small actions today lead to big results.",
+        "Set a clear goal and tackle it step by step.",
+        "Motivation is fuel—use it to start something meaningful."
+      ],
+      anxious: [
+        "Breathe slowly and center yourself. Calmness starts within.",
+        "Write down your worries—they often seem smaller on paper.",
+        "Trust yourself. You have overcome challenges before."
+      ]
+    };
 
-      <aside class="card">
-        <h3 style="color:var(--accent);margin:0">Short Sweet Notes</h3>
-        <div class="shortList" id="shortList"></div>
-        <div class="longMsg">
-        <div id="longMessage" class="editable" contenteditable="true">
-Mommy happy 19th birthday iloveyousomuch 💜 I can’t believe you’re 19 na feels like yesterday we were laughing at silly things and sharing small moments together ❤️ you make every day brighter and safer ✨ I love our college life walking between classes and walking late nights studying laughing at our mistakes every little thing with you makes me so happy 💜 I love how our relationship is healthy we talk we listen we forgive we care we support each other even when things get hard we hold on and never give up ❤️ I dream about our future us traveling seeing new places laughing until our tummies hurt building memories always reminding each other how lucky we are to have each other ✨ I want to grow old with you and always say iloveyousomuch Mommy 💜 you are my joy my comfort my best friend my safe place my forever ❤️ I hope your birthday today is full of smiles hugs love just like you make me feel every day ✨ happy happy 19th birthday Mommy 💜
-</div>
+    function getName() {
+      const name = document.getElementById('username').value.trim();
+      if (!name) return alert("Please enter your name first!");
+
+      app.innerHTML = `
+        <h2 class="fade">Nice to meet you, ${name}!</h2>
+        <p class="fade">How are you feeling today?</p>
+        <div class="fade">
+          <button onclick="showMoodAdvice('happy')">😊 Happy</button>
+          <button onclick="showMoodAdvice('sad')">😢 Sad</button>
+          <button onclick="showMoodAdvice('stressed')">😰 Stressed</button>
+          <button onclick="showMoodAdvice('motivated')">💪 Motivated</button>
+          <button onclick="showMoodAdvice('anxious')">😟 Anxious</button>
         </div>
-      </aside>
-    </div>
-
-    <section style="margin-top:18px;display:grid;grid-template-columns:1fr 360px;gap:18px">
-      <div class="card stageWrap">
-        <h3 style="margin:0;color:var(--accent)">Surprise Stage</h3>
-        <div class="stage" id="stage">
-          <img id="mainPhoto" class="mainPic" src="" alt="Main photo" style="display:none">
-          <div class="lineArea" id="lineArea">
-            <div class="glowLine" id="glowLine"></div>
-          </div>
-        </div>
-        <div id="finalText" class="small">ILOVEYOUSOMUCH MOMMY.</div>
-      </div>
-
-      <div class="card">
-        <h4 style="margin:0;color:var(--accent)">Click this mommy</h4>
-        <div class="controls">
-          <button id="surpriseBtn" class="btn">🎂 Happy Birthday mylove💜 — Click me</button>
-          <div class="small">iloveyousomuch Mommy mwamwamwamwa</div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>Made with one and only your daddy ❤.</footer>
-</div>
-
-<input id="fileInput" type="file" accept="image/*" style="display:none" />
-<audio id="birthdayAudio" preload="auto" loop></audio>
-
-<script>
-// ====== CONFIG ======
-const BIRTHDAY = {year:2006, month:11, day:11};
-
-// ====== GALLERY IMAGES (GitHub URLs) ======
-const numberImagesData = [
-  {name: "Number 1", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number1.jpg"},
-  {name: "Number 2", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number2.jpg"},
-  {name: "Number 3", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number3.jpg"},
-  {name: "Number 4", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number4.jpg"},
-  {name: "Number 5", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number5.jpg"},
-  {name: "Number 6", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number6.jpg"},
-  {name: "Number 7", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number7.jpg"},
-  {name: "Number 8", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number8.jpg"},
-  {name: "Number 9", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number9.jpg"},
-  {name: "Number 10", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number10.jpg"},
-  {name: "Number 11", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number11.jpg"},
-  {name: "Number 12", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number12.jpg"},
-  {name: "Number 13", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number13.jpg"},
-  {name: "Number 14", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number14.jpg"},
-  {name: "Number 15", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number15.jpg"},
-  {name: "Number 16", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number16.jpg"},
-  {name: "Number 17", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number17.jpg"},
-  {name: "Number 18", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number18.jpg"},
-  {name: "Number 19", category: "Birthday", img: "https://github.com/codebykenneth/codebykenneth.github.io/raw/main/number19.jpg"}
-];
-
-const thumbGrid = document.getElementById('thumbGrid');
-let selectedIndex = 0;
-let heartInterval = null;
-const audio = document.getElementById('birthdayAudio');
-
-// ====== CALENDAR / PASSWORD ======
-const yearSelect = document.getElementById('yearSelect');
-const monthSelect = document.getElementById('monthSelect');
-const daySelect = document.getElementById('daySelect');
-for(let y=2000;y<=2025;y++){ let o=document.createElement('option'); o.value=y; o.textContent=y; yearSelect.appendChild(o);}
-for(let m=1;m<=12;m++){ let o=document.createElement('option'); o.value=m; o.textContent=m; monthSelect.appendChild(o);}
-function updateDays(){
-  const y=parseInt(yearSelect.value), m=parseInt(monthSelect.value);
-  const daysInMonth=new Date(y,m,0).getDate();
-  daySelect.innerHTML='';
-  for(let d=1;d<=daysInMonth;d++){ let o=document.createElement('option'); o.value=d; o.textContent=d; daySelect.appendChild(o);}
-}
-yearSelect.addEventListener('change',updateDays);
-monthSelect.addEventListener('change',updateDays);
-updateDays();
-
-document.getElementById('pwTry').addEventListener('click',()=>{
-  const y=yearSelect.value, m=monthSelect.value.padStart(2,'0'), d=daySelect.value.padStart(2,'0');
-  if(parseInt(y)===BIRTHDAY.year && parseInt(m)===BIRTHDAY.month && parseInt(d)===BIRTHDAY.day){
-    unlock();
-    audio.play().catch(e=>console.warn('Audio play failed',e));
-  } else alert('Incorrect date. Try again 💜');
-});
-
-// ====== UNLOCK ======
-const lockDiv=document.getElementById('lock'); 
-const app=document.getElementById('app');
-function unlock(){
-  document.body.classList.add('unlock-ready');
-  lockDiv.style.transition='opacity .6s'; lockDiv.style.opacity=0;
-  setTimeout(()=>lockDiv.style.display='none',600);
-  app.classList.add('visible');
-}
-
-// ====== GALLERY ======
-numberImagesData.forEach((item,index)=>{
-  const div = document.createElement('div'); 
-  div.className='thumb'; 
-  div.dataset.index=index;
-  const img = document.createElement('img'); 
-  img.alt=item.name; 
-  img.src=item.img; 
-  div.appendChild(img);
-  div.addEventListener('click',()=>openPreview(index));
-  thumbGrid.appendChild(div);
-});
-setMain(0);
-
-function setMain(i){ 
-  selectedIndex=i; 
-  updateMainPhoto(); 
-}
-function updateMainPhoto(){ 
-  const mp=document.getElementById('mainPhoto'); 
-  mp.src = numberImagesData[selectedIndex].img; 
-  mp.style.display='block'; 
-  mp.classList.add('decor'); 
-}
-function openPreview(i){ 
-  const url = numberImagesData[i].img; 
-  const w=window.open('','_blank'); 
-  w.document.write(`<img src="${url}" style="max-width:100%;display:block;margin:20px auto;">`); 
-}
-
-// ====== SHORT MESSAGES ======
-const SHORT_MESSAGES = [
-  'You make every day better 😊',
-  'I love spending time with you 💛',
-  'You always make me smile 😄',
-  'Being with you feels right 💜',
-  'You’re my favorite person 🌟',
-  'I’m happy whenever you’re around 😌',
-  'You make life more fun 🎉',
-  'Can’t stop thinking about you 💖',
-  'You mean a lot to me 🥰'
-];
-const shortList=document.getElementById('shortList'); 
-SHORT_MESSAGES.forEach(t=>{
-  const box=document.createElement('div'); 
-  box.className='msgBox'; 
-  box.innerHTML=`<p>${t}</p>`; 
-  box.addEventListener('click',()=>box.classList.toggle('big')); 
-  shortList.appendChild(box); 
-});
-
-// ====== SURPRISE BUTTON (Cycle through all 19 images) ======
-const surpriseBtn=document.getElementById('surpriseBtn'); 
-const glowLine=document.getElementById('glowLine'); 
-const lineArea=document.getElementById('lineArea');
-
-surpriseBtn.addEventListener('click', () => {
-  glowLine.classList.add('show');
-  spawnHearts();
-
-  const mp = document.getElementById('mainPhoto');
-  mp.style.display = 'block';
-  mp.classList.add('decor');
-
-  if(audio.paused) audio.play().catch(e=>console.warn('Audio play failed', e));
-
-  // Cycle through all 19 images
-  let i = 0;
-  const interval = setInterval(() => {
-    if (i >= numberImagesData.length) {
-      clearInterval(interval);
-      return;
+      `;
     }
-    mp.src = numberImagesData[i].img;
-    i++;
-  }, 800); // adjust speed here
-});
 
-function spawnHearts(){
-  if(heartInterval) return;
-  let t=0;
-  heartInterval=setInterval(()=>{
-    const h=document.createElement('div'); 
-    h.className='heart';
-    const x = 16 * Math.pow(Math.sin(t),3);
-    const y = 13 * Math.cos(t) - 5*Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t);
-    h.style.left = ((x+20)/40*100)+'%';
-    h.style.bottom = (y*2+26)+'px';
-    h.style.fontSize = (12+Math.random()*28)+'px';
-    h.style.animationDuration = (2.4 + Math.random()*1.4)+'s';
-    h.style.opacity = 0.9;
-    h.textContent='❤️';
-    lineArea.appendChild(h);
-    t += 0.1;
-    setTimeout(()=>{ h.remove(); },5000);
-  },200);
-}
+    function showMoodAdvice(mood) {
+      const list = moodAdvice[mood];
+      const random = list[Math.floor(Math.random() * list.length)];
 
-// ====== Header edit ======
-document.getElementById('headerTitle').addEventListener('click', ()=>{
-  const t=prompt('Edit header greeting:', document.getElementById('headerTitle').innerText);
-  if(t!==null) document.getElementById('headerTitle').innerText=t;
-});
-</script>
+      app.innerHTML = `
+        <h2 class="fade">${mood.charAt(0).toUpperCase() + mood.slice(1)} Advice</h2>
+        <p id="adviceText" class="fade"></p>
+        <button class="fade" onclick="showMoodAdvice('${mood}')">More Advice</button>
+        <button class="fade" onclick="restart()">Change Mood</button>
+      `;
+
+      typeText(random, document.getElementById('adviceText'));
+    }
+
+    function typeText(text, element, speed = 40) {
+      element.textContent = "";
+      let i = 0;
+      function typing() {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+          setTimeout(typing, speed);
+        }
+      }
+      typing();
+    }
+
+    function restart() {
+      location.reload();
+    }
+  </script>
 </body>
 </html>
