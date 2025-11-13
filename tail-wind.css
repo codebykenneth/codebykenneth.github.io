@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --color-primary: #8B7355; /* warm earth tone for trust and grounding */
+  --color-primary-50: #F8F6F3;
+  --color-primary-100: #F0EBE5;
+  --color-primary-200: #E1D7CB;
+  --color-primary-300: #D2C3B1;
+  --color-primary-400: #C3AF97;
+  --color-primary-500: #8B7355; /* primary */
+  --color-primary-600: #7A6449;
+  --color-primary-700: #69553D;
+  --color-primary-800: #584631;
+  --color-primary-900: #473725;
+
+  /* Secondary Colors */
+  --color-secondary: #A8956B; /* gentle sophistication for secondary actions */
+  --color-secondary-50: #F9F7F3;
+  --color-secondary-100: #F3EFE7;
+  --color-secondary-200: #E7DFCF;
+  --color-secondary-300: #DBCFB7;
+  --color-secondary-400: #CFBF9F;
+  --color-secondary-500: #A8956B; /* secondary */
+  --color-secondary-600: #97845F;
+  --color-secondary-700: #867353;
+  --color-secondary-800: #756247;
+  --color-secondary-900: #64513B;
+
+  /* Accent Colors */
+  --color-accent: #6B8E7F; /* calm focus for wisdom highlights */
+  --color-accent-50: #F4F7F6;
+  --color-accent-100: #E9EFED;
+  --color-accent-200: #D3DFDB;
+  --color-accent-300: #BDCFC9;
+  --color-accent-400: #A7BFB7;
+  --color-accent-500: #6B8E7F; /* accent */
+  --color-accent-600: #5F7F72;
+  --color-accent-700: #537065;
+  --color-accent-800: #476158;
+  --color-accent-900: #3B524B;
+
+  /* Background Colors */
+  --color-background: #FEFCF8; /* soft warmth for comfortable reading */
+  --color-surface: #F7F4EF; /* subtle depth for content containers */
+
+  /* Text Colors */
+  --color-text-primary: #2D2A26; /* rich readability for extended engagement */
+  --color-text-secondary: #5A5651; /* clear hierarchy without harsh contrast */
+
+  /* Status Colors */
+  --color-success: #7A9B76; /* encouraging growth without celebration overload */
+  --color-success-50: #F5F8F5;
+  --color-success-100: #EBF1EB;
+  --color-success-200: #D7E3D7;
+  --color-success-300: #C3D5C3;
+  --color-success-400: #AFC7AF;
+  --color-success-500: #7A9B76; /* success */
+  --color-success-600: #6E8B6A;
+  --color-success-700: #627B5E;
+  --color-success-800: #566B52;
+  --color-success-900: #4A5B46;
+
+  --color-warning: #B8956A; /* gentle attention without alarm */
+  --color-warning-50: #FBF8F4;
+  --color-warning-100: #F7F1E9;
+  --color-warning-200: #EFE3D3;
+  --color-warning-300: #E7D5BD;
+  --color-warning-400: #DFC7A7;
+  --color-warning-500: #B8956A; /* warning */
+  --color-warning-600: #A6865F;
+  --color-warning-700: #947754;
+  --color-warning-800: #826849;
+  --color-warning-900: #70593E;
+
+  --color-error: #A67B5B; /* helpful concern with warmth intact */
+  --color-error-50: #FAF6F4;
+  --color-error-100: #F5EDE9;
+  --color-error-200: #EBDBD3;
+  --color-error-300: #E1C9BD;
+  --color-error-400: #D7B7A7;
+  --color-error-500: #A67B5B; /* error */
+  --color-error-600: #956F52;
+  --color-error-700: #846349;
+  --color-error-800: #735740;
+  --color-error-900: #624B37;
+
+  /* Border Colors */
+  --color-border: #E8E3DB; /* subtle borders for form inputs and content separation */
+  --color-border-light: #F0EBE5;
+  --color-border-dark: #D2C3B1;
+}
+
+@layer base {
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .font-accent {
+    font-family: 'Crimson Text', serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 ease-out hover:bg-primary-600 hover:shadow-lg;
+    box-shadow: 0 4px 20px rgba(139, 115, 85, 0.1);
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 ease-out hover:bg-secondary-600 hover:shadow-lg;
+    box-shadow: 0 4px 20px rgba(168, 149, 107, 0.1);
+  }
+
+  .card {
+    @apply bg-surface rounded-lg p-6 transition-all duration-300 ease-out;
+    box-shadow: 0 4px 20px rgba(139, 115, 85, 0.1);
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 border border-border rounded-lg bg-background text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-300 ease-out;
+  }
+
+  .wisdom-quote {
+    @apply font-accent text-lg italic text-accent-700 leading-relaxed;
+  }
+}
+
+@layer utilities {
+  .text-shadow-soft {
+    text-shadow: 0 2px 4px rgba(139, 115, 85, 0.1);
+  }
+
+  .shadow-warm {
+    box-shadow: 0 4px 20px rgba(139, 115, 85, 0.1);
+  }
+
+  .shadow-warm-lg {
+    box-shadow: 0 8px 30px rgba(139, 115, 85, 0.15);
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 300ms ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

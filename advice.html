@@ -1,197 +1,587 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Interactive Mood Advice</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-  body {
-    font-family: "Poppins", sans-serif;
-    height: 100vh;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
-    background-size: 400% 400%;
-    animation: gradientShift 10s ease infinite;
-  }
-
-  @keyframes gradientShift {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
-  }
-
-  .container {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(15px);
-    padding: 40px 30px;
-    border-radius: 25px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    width: 340px;
-    text-align: center;
-    color: #fff;
-    animation: fadeIn 1s ease;
-  }
-
-  h2 {
-    margin-bottom: 10px;
-    font-weight: 600;
-    color: #fff;
-  }
-
-  p {
-    margin: 10px 0 20px;
-    min-height: 50px;
-  }
-
-  input {
-    padding: 10px;
-    width: 80%;
-    border: none;
-    border-radius: 10px;
-    outline: none;
-    font-size: 16px;
-    text-align: center;
-  }
-
-  button {
-    background: linear-gradient(90deg, #a18cd1, #fbc2eb);
-    border: none;
-    padding: 10px 25px;
-    border-radius: 20px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 8px;
-    transition: 0.3s ease;
-    box-shadow: 0 0 10px rgba(255,255,255,0.2);
-  }
-
-  button:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 20px rgba(255,255,255,0.4);
-  }
-
-  .fade {
-    animation: fadeIn 1s ease;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .typewriter {
-    overflow: hidden;
-    border-right: .15em solid #fff;
-    white-space: nowrap;
-    margin: 0 auto;
-    letter-spacing: .05em;
-    animation: typing 2.5s steps(25, end), blink-caret .75s step-end infinite;
-  }
-
-  @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-  }
-
-  @keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: white; }
-  }
-</style>
-</head>
-<body>
-  <div class="container" id="app">
-    <h2 class="typewriter">Hello there!</h2>
-    <p>What’s your name?</p>
-    <input type="text" id="username" placeholder="Enter your name">
-    <br>
-    <button onclick="getName()">Continue</button>
-  </div>
-
-  <script>
-    const app = document.getElementById('app');
-
-    const moodAdvice = {
-      happy: [
-        "Keep spreading your positivity! Smile more today.",
-        "Your happiness is contagious. Share it with someone!",
-        "Enjoy the small wins—they matter more than you think."
-      ],
-      sad: [
-        "It's okay to feel sad. Allow yourself to rest and heal.",
-        "Talk to someone you trust. Sharing helps lighten the load.",
-        "Remember, storms never last forever. Better days are coming."
-      ],
-      stressed: [
-        "Take a deep breath. One step at a time is enough.",
-        "Short breaks help your mind reset. Try a 5-minute walk.",
-        "Focus on what you can control and let go of the rest."
-      ],
-      motivated: [
-        "Keep that energy! Small actions today lead to big results.",
-        "Set a clear goal and tackle it step by step.",
-        "Motivation is fuel—use it to start something meaningful."
-      ],
-      anxious: [
-        "Breathe slowly and center yourself. Calmness starts within.",
-        "Write down your worries—they often seem smaller on paper.",
-        "Trust yourself. You have overcome challenges before."
-      ]
-    };
-
-    function getName() {
-      const name = document.getElementById('username').value.trim();
-      if (!name) return alert("Please enter your name first!");
-
-      app.innerHTML = `
-        <h2 class="fade">Nice to meet you, ${name}!</h2>
-        <p class="fade">How are you feeling today?</p>
-        <div class="fade">
-          <button onclick="showMoodAdvice('happy')">😊 Happy</button>
-          <button onclick="showMoodAdvice('sad')">😢 Sad</button>
-          <button onclick="showMoodAdvice('stressed')">😰 Stressed</button>
-          <button onclick="showMoodAdvice('motivated')">💪 Motivated</button>
-          <button onclick="showMoodAdvice('anxious')">😟 Anxious</button>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advice Categories - WiseConnect</title>
+    <link rel="stylesheet" href="../css/main.css">
+  
+  <script type="module" async src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fwiseconnec5792back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.10"></script>
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
+  </head>
+<body class="bg-background min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-surface shadow-warm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <svg class="w-8 h-8 text-primary mr-3" viewBox="0 0 32 32" fill="currentColor">
+                        <path d="M16 2C8.268 2 2 8.268 2 16s6.268 14 14 14 14-6.268 14-14S23.732 2 16 2zm0 25c-6.065 0-11-4.935-11-11S9.935 5 16 5s11 4.935 11 11-4.935 11-11 11z"/>
+                        <path d="M16 8c-1.105 0-2 .895-2 2v8c0 1.105.895 2 2 2s2-.895 2-2v-8c0-1.105-.895-2-2-2zm0 14c-1.105 0-2 .895-2 2s.895 2 2 2 2-.895 2-2-.895-2-2-2z"/>
+                    </svg>
+                    <span class="text-xl font-inter font-semibold text-text-primary">WiseConnect</span>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="advice_categories.html" class="text-primary font-medium border-b-2 border-primary pb-1">Categories</a>
+                    <a href="support.html" class="text-text-secondary hover:text-primary transition-colors duration-300">Support</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-text-primary hover:text-primary transition-colors duration-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden hidden pb-4">
+                <a href="advice_categories.html" class="block py-2 text-primary font-medium">Categories</a>
+                <a href="support.html" class="block py-2 text-text-secondary hover:text-primary transition-colors duration-300">Support</a>
+            </div>
         </div>
-      `;
-    }
+    </nav>
 
-    function showMoodAdvice(mood) {
-      const list = moodAdvice[mood];
-      const random = list[Math.floor(Math.random() * list.length)];
+    <!-- Breadcrumb Navigation -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <nav class="flex items-center space-x-2 text-sm">
+            <a href="../index.html" class="text-text-secondary hover:text-primary transition-colors duration-300">Home</a>
+            <svg class="w-4 h-4 text-text-secondary" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="text-primary font-medium">Advice Categories</span>
+        </nav>
+    </div>
 
-      app.innerHTML = `
-        <h2 class="fade">${mood.charAt(0).toUpperCase() + mood.slice(1)} Advice</h2>
-        <p id="adviceText" class="fade"></p>
-        <button class="fade" onclick="showMoodAdvice('${mood}')">More Advice</button>
-        <button class="fade" onclick="restart()">Change Mood</button>
-      `;
+    <!-- Hero Section -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-inter font-semibold text-text-primary mb-6 animate-fade-in">
+                Choose Your Path to <span class="text-primary">Wisdom</span>
+            </h1>
+            <p class="text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed animate-fade-in">
+                Every journey begins with a single step. Select the area where you seek guidance, and let us share wisdom that resonates with your current chapter.
+            </p>
+        </div>
 
-      typeText(random, document.getElementById('adviceText'));
-    }
+        <!-- Main Categories -->
+        <div class="grid md:grid-cols-2 gap-8 mb-16">
+            <!-- Studies Category -->
+            <div class="category-card bg-surface rounded-2xl p-8 shadow-warm hover:shadow-warm-lg transition-all duration-300 cursor-pointer group" onclick="expandCategory('studies')">
+                <div class="text-center mb-6">
+                    <div class="text-6xl mb-4 group-hover:animate-gentle-bounce">📘</div>
+                    <h2 class="text-2xl font-inter font-semibold text-text-primary mb-3">Studies & Learning</h2>
+                    <p class="text-text-secondary leading-relaxed">Navigate your academic journey with confidence and clarity</p>
+                </div>
+                
+                <div class="flex items-center justify-between text-sm text-text-secondary">
+                    <span class="flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        127 pieces of wisdom
+                    </span>
+                    <span class="text-primary font-medium group-hover:translate-x-1 transition-transform duration-300">Explore →</span>
+                </div>
+            </div>
 
-    function typeText(text, element, speed = 40) {
-      element.textContent = "";
-      let i = 0;
-      function typing() {
-        if (i < text.length) {
-          element.textContent += text.charAt(i);
-          i++;
-          setTimeout(typing, speed);
+            <!-- Life Category -->
+            <div class="category-card bg-surface rounded-2xl p-8 shadow-warm hover:shadow-warm-lg transition-all duration-300 cursor-pointer group" onclick="expandCategory('life')">
+                <div class="text-center mb-6">
+                    <div class="text-6xl mb-4 group-hover:animate-gentle-bounce">💬</div>
+                    <h2 class="text-2xl font-inter font-semibold text-text-primary mb-3">Life & Relationships</h2>
+                    <p class="text-text-secondary leading-relaxed">Find guidance for life's beautiful complexities and connections</p>
+                </div>
+                
+                <div class="flex items-center justify-between text-sm text-text-secondary">
+                    <span class="flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        203 pieces of wisdom
+                    </span>
+                    <span class="text-primary font-medium group-hover:translate-x-1 transition-transform duration-300">Explore →</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expanded Categories Section -->
+    <section id="expanded-categories" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 hidden">
+        <!-- Studies Subcategories -->
+        <div id="studies-section" class="category-section hidden">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-inter font-semibold text-text-primary mb-4">📘 Studies & Learning</h2>
+                <p class="text-text-secondary max-w-2xl mx-auto">From exam strategies to lifelong learning habits, discover wisdom that transforms your educational journey.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <!-- Exam Preparation -->
+                <div class="advice-card bg-background rounded-xl p-6 shadow-warm hover:shadow-warm-lg transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1735508906341-9cb0dc169825" 
+                             alt="Student studying with books and notes on desk" 
+                             class="w-12 h-12 rounded-lg object-cover mr-4"
+                             onerror="this.src='https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;">
+                        <div>
+                            <h3 class="font-inter font-medium text-text-primary group-hover:text-primary transition-colors duration-300">Exam Preparation</h3>
+                            <div class="flex items-center text-xs text-text-secondary mt-1">
+                                <span class="bg-accent-100 text-accent-700 px-2 py-1 rounded-full mr-2">Beginner</span>
+                                <span>5-10 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-text-secondary mb-4">Master effective study techniques and overcome exam anxiety with proven strategies.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-text-secondary">23 pieces of wisdom</span>
+                        <button class="text-primary text-sm font-medium hover:underline">Get Advice</button>
+                    </div>
+                </div>
+
+                <!-- Time Management -->
+                <div class="advice-card bg-background rounded-xl p-6 shadow-warm hover:shadow-warm-lg transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1640522687164-6ba3890aa418" 
+                             alt="Clock and calendar showing time management concept" 
+                             class="w-12 h-12 rounded-lg object-cover mr-4"
+                             onerror="this.src='https://images.pixabay.com/photo/2017/07/31/11/21/people-2557396_1280.jpg'; this.onerror=null;">
+                        <div>
+                            <h3 class="font-inter font-medium text-text-primary group-hover:text-primary transition-colors duration-300">Time Management</h3>
+                            <div class="flex items-center text-xs text-text-secondary mt-1">
+                                <span class="bg-warning-100 text-warning-700 px-2 py-1 rounded-full mr-2">Intermediate</span>
+                                <span>3-7 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-text-secondary mb-4">Balance studies, work, and personal life with sustainable time management wisdom.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-text-secondary">31 pieces of wisdom</span>
+                        <button class="text-primary text-sm font-medium hover:underline">Get Advice</button>
+                    </div>
+                </div>
+
+                <!-- Career Preparation -->
+                <div class="advice-card bg-background rounded-xl p-6 shadow-warm hover:shadow-warm-lg transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1650669435220-1bbb78fb7463" 
+                             alt="Graduate student in cap and gown representing career preparation" 
+                             class="w-12 h-12 rounded-lg object-cover mr-4"
+                             onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3'; this.onerror=null;">
+                        <div>
+                            <h3 class="font-inter font-medium text-text-primary group-hover:text-primary transition-colors duration-300">Career Preparation</h3>
+                            <div class="flex items-center text-xs text-text-secondary mt-1">
+                                <span class="bg-success-100 text-success-700 px-2 py-1 rounded-full mr-2">Advanced</span>
+                                <span>8-15 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-text-secondary mb-4">Navigate the transition from student to professional with confidence and clarity.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-text-secondary">19 pieces of wisdom</span>
+                        <button class="text-primary text-sm font-medium hover:underline">Get Advice</button>
+                    </div>
+                </div>
+
+                <!-- Learning Strategies -->
+                <div class="advice-card bg-background rounded-xl p-6 shadow-warm hover:shadow-warm-lg transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1586279034670-9098c1af658c" 
+                             alt="Person reading book with highlighter and notes for effective learning" 
+                             class="w-12 h-12 rounded-lg object-cover mr-4"
+                             onerror="this.src='https://images.pexels.com/photos/256520/pexels-photo-256520.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;">
+                        <div>
+                            <h3 class="font-inter font-medium text-text-primary group-hover:text-primary transition-colors duration-300">Learning Strategies</h3>
+                            <div class="flex items-center text-xs text-text-secondary mt-1">
+                                <span class="bg-accent-100 text-accent-700 px-2 py-1 rounded-full mr-2">Beginner</span>
+                                <span>4-8 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-text-secondary mb-4">Discover how your brain learns best and develop personalized study methods.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-text-secondary">27 pieces of wisdom</span>
+                        <button class="text-primary text-sm font-medium hover:underline">Get Advice</button>
+                    </div>
+                </div>
+
+                <!-- Academic Stress -->
+                <div class="advice-card bg-background rounded-xl p-6 shadow-warm hover:shadow-warm-lg transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1529693662653-9d480530a697" 
+                             alt="Peaceful meditation scene representing stress management for students" 
+                             class="w-12 h-12 rounded-lg object-cover mr-4"
+                             onerror="this.src='https://images.pixabay.com/photo/2017/03/26/21/54/yoga-2176668_1280.jpg'; this.onerror=null;">
+                        <div>
+                            <h3 class="font-inter font-medium text-text-primary group-hover:text-primary transition-colors duration-300">Academic Stress</h3>
+                            <div class="flex items-center text-xs text-text-secondary mt-1">
+                                <span class="bg-warning-100 text-warning-700 px-2 py-1 rounded-full mr-2">Intermediate</span>
+                                <span>6-12 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-text-secondary mb-4">Transform academic pressure into motivation with mindful stress management techniques.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-text-secondary">18 pieces of wisdom</span>
+                        <button class="text-primary text-sm font-medium hover:underline">Get Advice</button>
+                    </div>
+                </div>
+
+                <!-- Study Groups -->
+                <div class="advice-card bg-background rounded-xl p-6 shadow-warm hover:shadow-warm-lg transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1595905156193-c6bed84f13eb" 
+                             alt="Group of diverse students collaborating and studying together" 
+                             class="w-12 h-12 rounded-lg object-cover mr-4"
+                             onerror="this.src='https://images.pexels.com/photos/1438072/pexels-photo-1438072.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;">
+                        <div>
+                            <h3 class="font-inter font-medium text-text-primary group-hover:text-primary transition-colors duration-300">Study Groups</h3>
+                            <div class="flex items-center text-xs text-text-secondary mt-1">
+                                <span class="bg-success-100 text-success-700 px-2 py-1 rounded-full mr-2">Advanced</span>
+                                <span>5-9 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-text-secondary mb-4">Harness the power of collaborative learning and build meaningful study partnerships.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-text-secondary">15 pieces of wisdom</span>
+                        <button class="text-primary text-sm font-medium hover:underline">Get Advice</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Life Subcategories -->
+        <div id="life-section" class="category-section hidden">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-inter font-semibold text-text-primary mb-4">💬 Life & Relationships</h2>
+                <p class="text-text-secondary max-w-2xl mx-auto">Navigate the beautiful complexity of human connections and personal growth with wisdom that honors your journey.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <!-- Relationships -->
+                <div class="advice-card bg-background rounded-xl p-6 shadow-warm hover:shadow-warm-lg transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1653762378316-29106785b7b6" 
+                             alt="Two friends having meaningful conversation over coffee" 
+                             class="w-12 h-12 rounded-lg object-cover mr-4"
+                             onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=2832&auto=format&fit=crop&ixlib=rb-4.0.3'; this.onerror=null;">
+                        <div>
+                            <h3 class="font-inter font-medium text-text-primary group-hover:text-primary transition-colors duration-300">Relationships</h3>
+                            <div class="flex items-center text-xs text-text-secondary mt-1">
+                                <span class="bg-accent-100 text-accent-700 px-2 py-1 rounded-full mr-2">Beginner</span>
+                                <span>7-12 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-text-secondary mb-4">Build deeper connections and navigate the complexities of human relationships with grace.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-text-secondary">42 pieces of wisdom</span>
+                        <button class="text-primary text-sm font-medium hover:underline">Get Advice</button>
+                    </div>
+                </div>
+
+                <!-- Personal Growth -->
+                <div class="advice-card bg-background rounded-xl p-6 shadow-warm hover:shadow-warm-lg transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1602064260035-a43255d7b08e" 
+                             alt="Person climbing mountain representing personal growth journey" 
+                             class="w-12 h-12 rounded-lg object-cover mr-4"
+                             onerror="this.src='https://images.unsplash.com/photo-1606824603318-c4ed4920924e'; this.onerror=null;">
+                        <div>
+                            <h3 class="font-inter font-medium text-text-primary group-hover:text-primary transition-colors duration-300">Personal Growth</h3>
+                            <div class="flex items-center text-xs text-text-secondary mt-1">
+                                <span class="bg-success-100 text-success-700 px-2 py-1 rounded-full mr-2">Advanced</span>
+                                <span>10-15 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-text-secondary mb-4">Embrace your journey of self-discovery and cultivate the person you're becoming.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-text-secondary">38 pieces of wisdom</span>
+                        <button class="text-primary text-sm font-medium hover:underline">Get Advice</button>
+                    </div>
+                </div>
+
+                <!-- Work-Life Balance -->
+                <div class="advice-card bg-background rounded-xl p-6 shadow-warm hover:shadow-warm-lg transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1617506993441-9522d12ac30a" 
+                             alt="Balanced workspace with plants and natural light representing work-life harmony" 
+                             class="w-12 h-12 rounded-lg object-cover mr-4"
+                             onerror="this.src='https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;">
+                        <div>
+                            <h3 class="font-inter font-medium text-text-primary group-hover:text-primary transition-colors duration-300">Work-Life Balance</h3>
+                            <div class="flex items-center text-xs text-text-secondary mt-1">
+                                <span class="bg-warning-100 text-warning-700 px-2 py-1 rounded-full mr-2">Intermediate</span>
+                                <span>8-14 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-text-secondary mb-4">Create sustainable harmony between professional ambitions and personal well-being.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-text-secondary">29 pieces of wisdom</span>
+                        <button class="text-primary text-sm font-medium hover:underline">Get Advice</button>
+                    </div>
+                </div>
+
+                <!-- Decision Making -->
+                <div class="advice-card bg-background rounded-xl p-6 shadow-warm hover:shadow-warm-lg transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1608019778017-2a787fb69bfc" 
+                             alt="Person at crossroads path representing decision making choices" 
+                             class="w-12 h-12 rounded-lg object-cover mr-4"
+                             onerror="this.src='https://images.pixabay.com/photo/2017/12/10/17/40/direction-3010209_1280.jpg'; this.onerror=null;">
+                        <div>
+                            <h3 class="font-inter font-medium text-text-primary group-hover:text-primary transition-colors duration-300">Decision Making</h3>
+                            <div class="flex items-center text-xs text-text-secondary mt-1">
+                                <span class="bg-accent-100 text-accent-700 px-2 py-1 rounded-full mr-2">Beginner</span>
+                                <span>5-10 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-text-secondary mb-4">Trust your inner wisdom while making choices that align with your authentic self.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-text-secondary">34 pieces of wisdom</span>
+                        <button class="text-primary text-sm font-medium hover:underline">Get Advice</button>
+                    </div>
+                </div>
+
+                <!-- Mental Health -->
+                <div class="advice-card bg-background rounded-xl p-6 shadow-warm hover:shadow-warm-lg transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3" 
+                             alt="Serene nature scene with person meditating for mental wellness" 
+                             class="w-12 h-12 rounded-lg object-cover mr-4"
+                             onerror="this.src='https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;">
+                        <div>
+                            <h3 class="font-inter font-medium text-text-primary group-hover:text-primary transition-colors duration-300">Mental Health</h3>
+                            <div class="flex items-center text-xs text-text-secondary mt-1">
+                                <span class="bg-success-100 text-success-700 px-2 py-1 rounded-full mr-2">Advanced</span>
+                                <span>12-18 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-text-secondary mb-4">Nurture your mental well-being with compassionate strategies for emotional resilience.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-text-secondary">25 pieces of wisdom</span>
+                        <button class="text-primary text-sm font-medium hover:underline">Get Advice</button>
+                    </div>
+                </div>
+
+                <!-- Life Transitions -->
+                <div class="advice-card bg-background rounded-xl p-6 shadow-warm hover:shadow-warm-lg transition-all duration-300 cursor-pointer group">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1542643033-4e49b6e307c7" 
+                             alt="Winding path through changing seasons representing life transitions" 
+                             class="w-12 h-12 rounded-lg object-cover mr-4"
+                             onerror="this.src='https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3'; this.onerror=null;">
+                        <div>
+                            <h3 class="font-inter font-medium text-text-primary group-hover:text-primary transition-colors duration-300">Life Transitions</h3>
+                            <div class="flex items-center text-xs text-text-secondary mt-1">
+                                <span class="bg-warning-100 text-warning-700 px-2 py-1 rounded-full mr-2">Intermediate</span>
+                                <span>9-16 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-text-secondary mb-4">Navigate life's changes with grace and find opportunity within uncertainty.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-text-secondary">21 pieces of wisdom</span>
+                        <button class="text-primary text-sm font-medium hover:underline">Get Advice</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- You Might Also Like Section -->
+    <section id="suggestions" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 hidden">
+        <div class="bg-surface rounded-2xl p-8 shadow-warm">
+            <h3 class="text-2xl font-inter font-semibold text-text-primary mb-6 text-center">You might also like...</h3>
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Seasonal Advice -->
+                <div class="bg-background rounded-xl p-6 text-center hover:shadow-warm-lg transition-all duration-300">
+                    <div class="text-3xl mb-3">🍂</div>
+                    <h4 class="font-inter font-medium text-text-primary mb-2">Seasonal Wisdom</h4>
+                    <p class="text-sm text-text-secondary mb-4">Advice that aligns with life's natural rhythms and current seasons</p>
+                    <button class="text-primary text-sm font-medium hover:underline">Explore</button>
+                </div>
+
+                <!-- Daily Wisdom -->
+                <div class="bg-background rounded-xl p-6 text-center hover:shadow-warm-lg transition-all duration-300">
+                    <div class="text-3xl mb-3">☀️</div>
+                    <h4 class="font-inter font-medium text-text-primary mb-2">Daily Insights</h4>
+                    <p class="text-sm text-text-secondary mb-4">Start each day with a gentle piece of wisdom delivered to you</p>
+                    <button class="text-primary text-sm font-medium hover:underline">Subscribe</button>
+                </div>
+
+                <!-- Community Stories -->
+                <div class="bg-background rounded-xl p-6 text-center hover:shadow-warm-lg transition-all duration-300">
+                    <div class="text-3xl mb-3">🌟</div>
+                    <h4 class="font-inter font-medium text-text-primary mb-2">Success Stories</h4>
+                    <p class="text-sm text-text-secondary mb-4">See how others have applied wisdom to transform their lives</p>
+                    <button class="text-primary text-sm font-medium hover:underline">Read Stories</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-surface border-t border-border-light">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Brand -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <svg class="w-8 h-8 text-primary mr-3" viewBox="0 0 32 32" fill="currentColor">
+                            <path d="M16 2C8.268 2 2 8.268 2 16s6.268 14 14 14 14-6.268 14-14S23.732 2 16 2zm0 25c-6.065 0-11-4.935-11-11S9.935 5 16 5s11 4.935 11 11-4.935 11-11 11z"/>
+                            <path d="M16 8c-1.105 0-2 .895-2 2v8c0 1.105.895 2 2 2s2-.895 2-2v-8c0-1.105-.895-2-2-2zm0 14c-1.105 0-2 .895-2 2s.895 2 2 2 2-.895 2-2-.895-2-2-2z"/>
+                        </svg>
+                        <span class="text-xl font-inter font-semibold text-text-primary">WiseConnect</span>
+                    </div>
+                    <p class="text-text-secondary leading-relaxed mb-4">
+                        Your trusted companion for life's journey, where wisdom flows naturally through gentle interactions, creating moments of clarity and inspiration.
+                    </p>
+                    <p class="text-sm text-text-secondary">
+                        Every question deserves thoughtful guidance. Wisdom grows through sharing.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-inter font-medium text-text-primary mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="advice_categories.html" class="text-text-secondary hover:text-primary transition-colors duration-300">Categories</a></li>
+                        <li><a href="support.html" class="text-text-secondary hover:text-primary transition-colors duration-300">Support</a></li>
+                        <li><a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-colors duration-300">Daily Wisdom</a></li>
+                        <li><a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-colors duration-300">Community</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="font-inter font-medium text-text-primary mb-4">Connect</h4>
+                    <ul class="space-y-2">
+                        <li><a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-colors duration-300">About Us</a></li>
+                        <li><a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-colors duration-300">Privacy Policy</a></li>
+                        <li><a href="javascript:void(0)" class="text-text-secondary hover:text-primary transition-colors duration-300">Terms of Service</a></li>
+                        <li><a href="support.html" class="text-text-secondary hover:text-primary transition-colors duration-300">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-border-light mt-8 pt-8 text-center">
+                <p class="text-text-secondary text-sm">
+                    © 2025 WiseConnect. All Rights Reserved. Made with wisdom and care.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Category expansion functionality
+        function expandCategory(category) {
+            const expandedSection = document.getElementById('expanded-categories');
+            const studiesSection = document.getElementById('studies-section');
+            const lifeSection = document.getElementById('life-section');
+            const suggestionsSection = document.getElementById('suggestions');
+
+            // Show expanded categories section
+            expandedSection.classList.remove('hidden');
+            expandedSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Hide all sections first
+            studiesSection.classList.add('hidden');
+            lifeSection.classList.add('hidden');
+
+            // Show the selected category
+            if (category === 'studies') {
+                setTimeout(() => {
+                    studiesSection.classList.remove('hidden');
+                    studiesSection.classList.add('animate-fade-in');
+                }, 300);
+            } else if (category === 'life') {
+                setTimeout(() => {
+                    lifeSection.classList.remove('hidden');
+                    lifeSection.classList.add('animate-fade-in');
+                }, 300);
+            }
+
+            // Show suggestions after a delay
+            setTimeout(() => {
+                suggestionsSection.classList.remove('hidden');
+                suggestionsSection.classList.add('animate-fade-in');
+            }, 600);
         }
-      }
-      typing();
-    }
 
-    function restart() {
-      location.reload();
-    }
-  </script>
+        // Add hover effects to category cards
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add click effects to advice cards
+        document.querySelectorAll('.advice-card').forEach(card => {
+            card.addEventListener('click', () => {
+                // Add a gentle pulse effect
+                card.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    card.style.transform = 'scale(1)';
+                }, 150);
+            });
+        });
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add loading animation for advice cards
+        function showLoadingState(button) {
+            const originalText = button.textContent;
+            button.textContent = 'Loading...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.disabled = false;
+            }, 1500);
+        }
+
+        // Add click handlers to "Get Advice" buttons
+        document.querySelectorAll('.advice-card button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showLoadingState(button);
+            });
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
 </body>
 </html>
